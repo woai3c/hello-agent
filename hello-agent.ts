@@ -12,6 +12,13 @@ import { z } from 'zod'
 import fs from 'node:fs/promises'
 import readline from 'node:readline'
 
+// README「方式 C」：项目根目录的 .env 不会自动注入 process.env，需显式加载
+try {
+  process.loadEnvFile()
+} catch {
+  // 无 .env 时忽略；也可用 shell 环境变量 DEEPSEEK_API_KEY
+}
+
 // 给模型一个工具：读取一个文件的全部内容
 const readFile = tool({
   description: '读取一个文本文件，返回完整内容',
